@@ -2,12 +2,12 @@ import React from 'react';
 import './App.css';
 
 const IntervalForm = props => {
-    const {handleSubmitChangeTimerInterval, handleChange, longIntervalMinutes, shortIntervalMinutes } = props
-
+    const {handleChange, longIntervalMinutes, shortIntervalMinutes } = props
+   
     return (
         <div>
         <p>Personalize your intervals here (in minutes!):</p>
-        <form onSubmit={handleSubmitChangeTimerInterval}>
+        <form>
             <label>Work Timer</label>
                 <input 
                     type="text"
@@ -22,7 +22,6 @@ const IntervalForm = props => {
                     value={shortIntervalMinutes}
                     onChange={handleChange}
                 ></input>
-            <button type="submit">Submit</button>
         </form>
         </div>
     )

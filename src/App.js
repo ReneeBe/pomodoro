@@ -1,42 +1,53 @@
 import React, {useState} from 'react';
 import './App.css';
 import IntervalForm from './IntervalForm';
-let longPomoTimer;
-let shortPomoTimer;
+let remainingSeconds;
+let pomoTimer;
 
 function App() {
   const [longIntervalMinutes, setLongIntervalMinutes] = useState(25);
   const [shortIntervalMinutes, setShortIntervalMinutes] = useState(5)
   const [remainingTimeSeconds, setRemainingTimeSeconds] = useState(null);
+  const [timerBeingUsed, setTimerBeingUsed] = useState("long");
+  const [pauseTimer, setPauseTimer] = useState(false);
 
   function handleStartClick() {
-    clearInterval(longPomoTimer)
-    clearInterval(shortPomoTimer)
-    let remainingSeconds = longIntervalMinutes * 60;
-    longPomoTimer = setInterval(() => {
+    if (pauseTimer === true) {
+      setPauseTimer(false);
+    } else {
+      remainingSeconds = longIntervalMinutes * 60;
+    }
+    runTimer();
+  }
+
+  const runTimer = () => {
+    pomoTimer = setInterval(() => {
       remainingSeconds--;
       setRemainingTimeSeconds(remainingSeconds);
+
       if (remainingSeconds <= 0) {
-        alert("The timer is complete! Take a break")
-        clearInterval(longPomoTimer);
-        handleShortInterval()
+        alert(timerBeingUsed === "long" ? "The timer is complete! Take a break!" : "Head back to work - click start when you're ready to start a new timer!");
+        clearInterval(pomoTimer);
+        setTimerBeingUsed(timerBeingUsed === "long" ? "short": "long");
+        remainingSeconds = timerBeingUsed === "short" ? shortIntervalMinutes * 60 : longIntervalMinutes*60;
       }
-    }, 1000);
-    
+    }, 1000)
   }
 
-  function handleShortInterval() {
-    let remainingSeconds = shortIntervalMinutes * 60;
-    shortPomoTimer = setInterval(() => {
 
-      remainingSeconds--;
-      setRemainingTimeSeconds(remainingSeconds);
-      if (remainingTimeSeconds <= 0) {
-        alert("Head back to work - click start when you're ready to start a new timer!")
-        clearInterval(shortPomoTimer);
-      }
-    }, 1000);
+  const handleStopClick = () => {
+    setPauseTimer(true);
+    setRemainingTimeSeconds(remainingSeconds);
+    clearInterval(pomoTimer);
   }
+  
+  function handleResetClick() {
+    clearInterval(pomoTimer);
+    setRemainingTimeSeconds(null);
+    setPauseTimer(false);
+    updateTimerDisplay();
+  }
+
 
   function handleChange(e) {
     e.preventDefault();
@@ -46,11 +57,6 @@ function App() {
     if (e.target.name === 'shortTimer') {
       setShortIntervalMinutes(e.target.value);
     }
-  }
-
-  function handleSubmitChangeTimerInterval(e) {
-    e.preventDefault();
-    console.log('renee come back');
   }
 
   function updateTimerDisplay() {
@@ -68,18 +74,26 @@ function App() {
   return (
     <div className="App">
       <div className="timer">
-          {updateTimerDisplay()}
+        {updateTimerDisplay()}
+        <div className="button-bar">
+          <button className="button-start" onClick={handleStartClick}>
+            <label>Start</label>
+          </button>
+          <button className="button-stop" onClick={handleStopClick}>
+            <label>Stop</label>
+          </button>
+          <button className="button-reset" onClick={handleResetClick}>
+            <label>Reset</label>
+          </button>
+        </div>
       </div>
+
       <div className="interval-mod-form">
         <IntervalForm 
-          handleSubmitChangeTimerInterval = {handleSubmitChangeTimerInterval}
           handleChange = {handleChange}
           longIntervalMinutes = {longIntervalMinutes}
           shortIntervalMinutes = {shortIntervalMinutes}
         />
-        <button onClick={handleStartClick}>
-          <label>Start the timer!</label>
-        </button>
       </div>
       <div className="footer"></div>
     </div>
