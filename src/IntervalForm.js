@@ -17,7 +17,7 @@ const IntervalForm = props => {
                 ></input>
             <label>Break Timer</label>
                 <input
-                    type="test"
+                    type="text"
                     name="shortTimer"
                     value={shortIntervalMinutes}
                     onChange={handleChange}

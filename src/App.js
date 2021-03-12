@@ -7,10 +7,11 @@ let shortPomoTimer;
 function App() {
   const [longIntervalMinutes, setLongIntervalMinutes] = useState(25);
   const [shortIntervalMinutes, setShortIntervalMinutes] = useState(5)
-
   const [remainingTimeSeconds, setRemainingTimeSeconds] = useState(null);
 
   function handleStartClick() {
+    clearInterval(longPomoTimer)
+    clearInterval(shortPomoTimer)
     let remainingSeconds = longIntervalMinutes * 60;
     longPomoTimer = setInterval(() => {
       remainingSeconds--;
@@ -52,16 +53,24 @@ function App() {
     console.log('renee come back');
   }
 
+  function updateTimerDisplay() {
+    let minutes = '25';
+    let seconds = '00';
+
+    if(remainingTimeSeconds) {
+      minutes = String(Math.floor(remainingTimeSeconds / 60)).padStart(2, '0');
+      seconds = String(remainingTimeSeconds%60).padStart(2, '0');
+    }
+    
+    return `${minutes}:${seconds}`
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <p> {
-          remainingTimeSeconds ?
-          `${Math.floor(remainingTimeSeconds / 60)} : ${remainingTimeSeconds % 60}`
-          : '25:00' }
-        </p>
-      </header>
-      <div >
+      <div className="timer">
+          {updateTimerDisplay()}
+      </div>
+      <div className="interval-mod-form">
         <IntervalForm 
           handleSubmitChangeTimerInterval = {handleSubmitChangeTimerInterval}
           handleChange = {handleChange}
@@ -72,7 +81,7 @@ function App() {
           <label>Start the timer!</label>
         </button>
       </div>
-      
+      <div className="footer"></div>
     </div>
   );
 }
