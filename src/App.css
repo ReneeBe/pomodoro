@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #e54b4b;
 }
 
 .App-logo {
@@ -27,12 +28,15 @@
 
 button{
   border-width: 2px;
-  border-radius: 10%;
+  border-radius: 15%;
   font-size: calc(10px + 1vmin);
+  border-color: #e54b4b;
 
 }
 
 .button-bar{
+  display: flex;
+  flex-direction: row;
   align-content: space-between;
 }
 
@@ -65,9 +69,28 @@ button{
 }
 .interval-mod-form {
   background-color: #e54b4b;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
+
 .Set-timer-form {
   display: flex;
   flex-direction: row;
   align-items: space-between;
+}
+
+
+.interval-form-block {
+  display:inline-block;
+  margin: 5px;
+}
+
+.interval-form-block label {
+  display:block;
+}
+
+.interval-form-block input {
+  padding: 5px;
+  margin: 5px 0;
 }
