@@ -2,40 +2,34 @@ import React from 'react';
 import './App.css';
 
 const IntervalForm = props => {
-    const {handleChange, handleSubmit, longIntervalMinutes, shortIntervalMinutes } = props
+    const {handleSubmit, handleTimerChange, focusIntervalMinutes, breakIntervalMinutes } = props
    
     return (
         <div>
-            <h1>Personalize your intervals here:</h1>
             <form onSubmit={handleSubmit}>
                 <div className="interval-form-block">
                     <label>
-                        Work Timer:
+                        Focus:
                     </label>
-                        <input 
-                            type="text"
-                            name="longTimer"
-                            value={longIntervalMinutes}
-                            onChange={handleChange}
-                        ></input>
-
+                        <div className="plus-minus-buttons">
+                            <button onClick={handleTimerChange} value="+" name="focus-timer">+</button>
+                            <text>{focusIntervalMinutes}</text>
+                            <button onClick={handleTimerChange} value="-" name="focus-timer">-</button>
+                        </div>
                 </div>
                 <div className="interval-form-block">
                     <label>
-                        Break Timer:
+                        Break:
                     </label>
-                        <input
-                            type="text"
-                            name="shortTimer"
-                            value={shortIntervalMinutes}
-                            onChange={handleChange}
-                        ></input>
+                        <div className="plus-minus-buttons">
+                            <button onClick={handleTimerChange} value="+" name="break-timer">+</button>
+                            <text>{breakIntervalMinutes}</text>
+                            <button onClick={handleTimerChange} value="-" name="break-timer">-</button>
+                        </div>
                 </div>
-                <button type="Submit"> Submit </button>
+                <br />
+                <button type="Submit" className="submit-button"> Submit </button>
             </form>
-            <h3>
-                Please provide time in minutes
-            </h3>
         </div>
     )
 }

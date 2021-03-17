@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   background-color: #e54b4b;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -27,17 +28,18 @@
 
 
 button{
-  border-width: 2px;
-  border-radius: 15%;
+  border-width: 1%;
+  border-radius: 10%;
   font-size: calc(10px + 1vmin);
-  border-color: #e54b4b;
+  border-color: black;
+  margin: 3%;
 
 }
 
 .button-bar{
   display: flex;
   flex-direction: row;
-  align-content: space-between;
+  align-content: space-evenly;
 }
 
 .button-start {
@@ -51,7 +53,7 @@ button{
 }
 
 .button-reset {
-  background-color: grey;
+  background-color: lightslategrey;
   color: black;
 }
 
@@ -74,7 +76,7 @@ button{
   justify-content: center;
 }
 
-.Set-timer-form {
+.set-timer-form {
   display: flex;
   flex-direction: row;
   align-items: space-between;
@@ -93,4 +95,29 @@ button{
 .interval-form-block input {
   padding: 5px;
   margin: 5px 0;
+}
+
+.interval-form-block text {
+  display: block;
+  padding: 5px;
+  margin: 5px 0;
+  font-size: calc(40px + 1vmin);
+  color: rgb(255, 165, 0);
+}
+
+.submit-button {
+  background-color: pink;
+}
+
+.plus-minus-buttons {
+  display: flex;
+}
+
+.plus-minus-buttons button{
+  color: rgb(255, 165, 0);
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  font-size: calc(40px + 1vmin)
 }

@@ -5,17 +5,17 @@ let remainingSeconds;
 let pomoTimer;
 
 function App() {
-  const [longIntervalMinutes, setLongIntervalMinutes] = useState(25);
-  const [shortIntervalMinutes, setShortIntervalMinutes] = useState(5)
+  const [focusIntervalMinutes, setFocusIntervalMinutes] = useState(25);
+  const [breakIntervalMinutes, setBreakIntervalMinutes] = useState(5)
   const [remainingTimeSeconds, setRemainingTimeSeconds] = useState(null);
-  const [timerBeingUsed, setTimerBeingUsed] = useState("long");
+  const [timerBeingUsed, setTimerBeingUsed] = useState("focus");
   const [pauseTimer, setPauseTimer] = useState(false);
 
   function handleStartClick() {
     if (pauseTimer === true) {
       setPauseTimer(false);
     } else {
-      remainingSeconds = longIntervalMinutes * 60;
+      remainingSeconds = focusIntervalMinutes * 60;
     }
     runTimer();
   }
@@ -23,30 +23,15 @@ function App() {
   const runTimer = () => {
     let newTimer = timerBeingUsed;
 
-
-
-
     pomoTimer = setInterval(() => {
       remainingSeconds--;
       setRemainingTimeSeconds(remainingSeconds);
-
       if (remainingSeconds <= 0) {
-        alert(timerBeingUsed === "long" ? "The timer is complete! Take a break!" : "Head back to work - click start when you're ready to start a new timer!");
-        // console.log('here is timer being used', timerBeingUsed);
+        alert(timerBeingUsed === "focus" ? "The timer is complete! Take a break!" : "Head back to work - click start when you're ready to start a new timer!");
         clearInterval(pomoTimer);
-
-        newTimer = timerBeingUsed === "long" ? "short" : "long";
-        remainingSeconds = newTimer === "short" ? shortIntervalMinutes * 60 : longIntervalMinutes * 60;
-        // console.log('here is newTimer', newTimer);
-        // if (timerBeingUsed === "short") {
-        //   clearInterval(pomoTimer);
-        // }
+        newTimer = timerBeingUsed === "focus" ? "break" : "focus";
+        remainingSeconds = newTimer === "breaj" ? breakIntervalMinutes * 60 : focusIntervalMinutes * 60;
         setTimerBeingUsed(newTimer);
-        // console.log('here is timerBeingUsed after', timerBeingUsed);
-        // console.log('here is remainingSeconds ', remainingSeconds);
-        // setRemainingTimeSeconds(remainingSeconds);
-        // console.log('and here is remainingTimeSDeconbds after', remainingTimeSeconds)
-
       }
     }, 1000)
   }
@@ -60,38 +45,41 @@ function App() {
   
   function handleResetClick() {
     clearInterval(pomoTimer);
-    setRemainingTimeSeconds(null);
+    setRemainingTimeSeconds(focusIntervalMinutes * 60);
     setPauseTimer(false);
-    updateTimerDisplay();
   }
 
-
-  function handleChange(e) {
+  function handleTimerChange(e) {
     e.preventDefault();
-    if (e.target.name === 'longTimer') {
-      setLongIntervalMinutes(e.target.value);
-    } 
-    if (e.target.name === 'shortTimer') {
-      setShortIntervalMinutes(e.target.value);
+    if (e.target.name === 'focus-timer') {
+      if (e.target.value === '+') {
+        setFocusIntervalMinutes(prev => prev + 1);
+      } else {
+        setFocusIntervalMinutes(prev => prev - 1);
+      }
+    } else if (e.target.name === 'break-timer') {
+      if (e.target.value === '+') {
+        setBreakIntervalMinutes(prev => prev + 1)
+      } else {
+        setBreakIntervalMinutes(prev => prev - 1);
+      }
     }
   }
 
+
   function handleSubmit(e) {
     e.preventDefault();
-    setRemainingTimeSeconds(longIntervalMinutes * 60);
-    setTimerBeingUsed("long");
+    setRemainingTimeSeconds(focusIntervalMinutes * 60);
+    setTimerBeingUsed("focus");
   }
 
   function updateTimerDisplay() {
-    let minutes = '25',
-    seconds = '00';
-
+    let minutes, seconds;
     if(remainingTimeSeconds) {
       minutes = String(Math.floor(remainingTimeSeconds / 60)).padStart(2, '0');
       seconds = String(remainingTimeSeconds%60).padStart(2, '0');
     }
-    
-    return `${minutes}:${seconds}`
+    return `${minutes || '25'}:${seconds || '00'}`
   }
 
   return (
@@ -112,10 +100,10 @@ function App() {
       </div>
       <div className="interval-mod-form">
         <IntervalForm 
-          handleChange = {handleChange}
           handleSubmit = {handleSubmit}
-          longIntervalMinutes = {longIntervalMinutes}
-          shortIntervalMinutes = {shortIntervalMinutes}
+          handleTimerChange={handleTimerChange}
+          focusIntervalMinutes = {focusIntervalMinutes}
+          breakIntervalMinutes = {breakIntervalMinutes}
         />
       </div>
       <div className="footer">
