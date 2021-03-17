@@ -30,7 +30,7 @@ function App() {
         alert(timerBeingUsed === "focus" ? "The timer is complete! Take a break!" : "Head back to work - click start when you're ready to start a new timer!");
         clearInterval(pomoTimer);
         newTimer = timerBeingUsed === "focus" ? "break" : "focus";
-        remainingSeconds = newTimer === "breaj" ? breakIntervalMinutes * 60 : focusIntervalMinutes * 60;
+        remainingSeconds = newTimer === "break" ? breakIntervalMinutes * 60 : focusIntervalMinutes * 60;
         setTimerBeingUsed(newTimer);
       }
     }, 1000)
@@ -69,8 +69,11 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setRemainingTimeSeconds(focusIntervalMinutes * 60);
-    setTimerBeingUsed("focus");
+    if (!timerBeingUsed) {
+      setRemainingTimeSeconds(focusIntervalMinutes * 60);
+      setTimerBeingUsed("focus");
+      updateTimerDisplay();
+    }
   }
 
   function updateTimerDisplay() {
