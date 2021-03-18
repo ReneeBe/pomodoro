@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import './App.css';
 import IntervalForm from './IntervalForm';
 let remainingSeconds;
 let pomoTimer;
 
+
 function App() {
   const [focusIntervalMinutes, setFocusIntervalMinutes] = useState(25);
   const [breakIntervalMinutes, setBreakIntervalMinutes] = useState(5)
-  const [remainingTimeSeconds, setRemainingTimeSeconds] = useState(null);
+  const [remainingTimeSeconds, setRemainingTimeSeconds] = useState(25 * 60);
   const [timerBeingUsed, setTimerBeingUsed] = useState("focus");
   const [pauseTimer, setPauseTimer] = useState(false);
 
@@ -45,6 +47,7 @@ function App() {
   
   function handleResetClick() {
     clearInterval(pomoTimer);
+    setTimerBeingUsed("focus");
     setRemainingTimeSeconds(focusIntervalMinutes * 60);
     setPauseTimer(false);
   }
@@ -88,6 +91,9 @@ function App() {
   return (
     <div className="App">
       <div className="timer">
+        <ProgressBar now={remainingTimeSeconds/60} /> 
+          {/* // / (timerBeingUsed === "focus" ? focusIntervalMinutes : breakIntervalMinutes) 
+        // } /> */}
         {updateTimerDisplay()}
         <div className="button-bar">
           <button className="button-start" onClick={handleStartClick}>

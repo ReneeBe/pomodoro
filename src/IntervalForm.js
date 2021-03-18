@@ -12,9 +12,9 @@ const IntervalForm = props => {
                         Focus:
                     </label>
                         <div className="plus-minus-buttons">
-                            <button onClick={handleTimerChange} value="+" name="focus-timer">+</button>
-                            <text>{focusIntervalMinutes}</text>
-                            <button onClick={handleTimerChange} value="-" name="focus-timer">-</button>
+                            <button type="button" onClick={handleTimerChange} value="+" name="focus-timer"> + </button>
+                            <p>{focusIntervalMinutes}</p>
+                            <button type="button" onClick={handleTimerChange} value="-" name="focus-timer"> - </button>
                         </div>
                 </div>
                 <div className="interval-form-block">
@@ -22,9 +22,9 @@ const IntervalForm = props => {
                         Break:
                     </label>
                         <div className="plus-minus-buttons">
-                            <button onClick={handleTimerChange} value="+" name="break-timer">+</button>
-                            <text>{breakIntervalMinutes}</text>
-                            <button onClick={handleTimerChange} value="-" name="break-timer">-</button>
+                            <button type="button" onClick={handleTimerChange} value="+" name="break-timer"> + </button>
+                            <p>{breakIntervalMinutes}</p>
+                            <button type="button" onClick={handleTimerChange} value="-" name="break-timer"> - </button>
                         </div>
                 </div>
                 <br />
